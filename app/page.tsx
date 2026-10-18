@@ -172,7 +172,7 @@ function VideoCard({ src }: { src: string }) {
 
 /* ── Wheel Video Card (with 16:9 ambient backdrop detection) ── */
 function WheelVideoCard({ vid, index, isActive }: { vid: string; index: number; isActive: boolean }) {
-  const [isLandscape, setIsLandscape] = useState(vid.includes('newhg1'));
+  const [isLandscape, setIsLandscape] = useState(false);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
 
   const handleClick = () => {
@@ -219,10 +219,9 @@ function WheelVideoCard({ vid, index, isActive }: { vid: string; index: number; 
           loop
           muted
           playsInline
+          preload="metadata"
           onLoadedMetadata={(e) => {
-            if (e.currentTarget.videoWidth > e.currentTarget.videoHeight) {
-              setIsLandscape(true);
-            }
+            setIsLandscape(e.currentTarget.videoWidth > e.currentTarget.videoHeight);
           }}
           style={{
             width: '100%',
